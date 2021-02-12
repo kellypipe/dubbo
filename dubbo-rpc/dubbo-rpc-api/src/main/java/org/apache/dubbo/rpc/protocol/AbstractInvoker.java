@@ -26,14 +26,7 @@ import org.apache.dubbo.common.threadpool.manager.ExecutorRepository;
 import org.apache.dubbo.common.utils.ArrayUtils;
 import org.apache.dubbo.common.utils.CollectionUtils;
 import org.apache.dubbo.common.utils.NetUtils;
-import org.apache.dubbo.rpc.AsyncRpcResult;
-import org.apache.dubbo.rpc.Invocation;
-import org.apache.dubbo.rpc.InvokeMode;
-import org.apache.dubbo.rpc.Invoker;
-import org.apache.dubbo.rpc.Result;
-import org.apache.dubbo.rpc.RpcContext;
-import org.apache.dubbo.rpc.RpcException;
-import org.apache.dubbo.rpc.RpcInvocation;
+import org.apache.dubbo.rpc.*;
 import org.apache.dubbo.rpc.protocol.dubbo.FutureAdapter;
 import org.apache.dubbo.rpc.support.RpcUtils;
 
@@ -51,10 +44,16 @@ public abstract class AbstractInvoker<T> implements Invoker<T> {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
+    //该 Invoker 对象封装的业务接口类型
     private final Class<T> type;
-
+    //与当前 Invoker 关联的 URL 对象，其中包含了全部的配置信息
     private final URL url;
 
+    /**
+     * 当前 Invoker 关联的一些附加信息，这些附加信息可以来自关联的 URL。
+     * 在 AbstractInvoker 的构造函数的某个重载中，会调用 convertAttachment() 方法，
+     * 其中就会从关联的 URL 对象获取指定的 KV 值记录到 attachment 集合中
+     */
     private final Map<String, Object> attachment;
 
     private volatile boolean available = true;

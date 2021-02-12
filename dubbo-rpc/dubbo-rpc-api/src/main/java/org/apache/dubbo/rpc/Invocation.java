@@ -29,7 +29,7 @@ import java.util.stream.Stream;
  * @see org.apache.dubbo.rpc.RpcInvocation
  */
 public interface Invocation {
-
+    // 调用Service的唯一标识
     String getTargetServiceUniqueName();
 
     /**
@@ -60,6 +60,7 @@ public interface Invocation {
      *
      * @return parameter's signature
      */
+    // 参数签名集合
     default String[] getCompatibleParamSignatures() {
         return Stream.of(getParameterTypes())
                 .map(Class::getName)
@@ -118,6 +119,8 @@ public interface Invocation {
      * @return attachment value.
      * @serial
      */
+    // Invocation可以携带一个KV信息作为附加信息，一并传递给Provider，
+    // 注意与 attribute 的区分
     String getAttachment(String key, String defaultValue);
 
     @Experimental("Experiment api for supporting Object transmission")
@@ -125,12 +128,12 @@ public interface Invocation {
 
     /**
      * get the invoker in current context.
-     *
+     * // 此次调用关联的Invoker对象
      * @return invoker.
      * @transient
      */
     Invoker<?> getInvoker();
-
+    // Invoker对象可以设置一些KV属性，这些属性并不会传递给Provider
     Object put(Object key, Object value);
 
     Object get(Object key);

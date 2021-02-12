@@ -214,12 +214,12 @@
                                     <goal>enforce</goal>
                                 </goals>
                                 <configuration>
-                                    <rules>
+                           <!--         <rules>
                                         <requireSnapshotVersion>
                                             <message>No Releases Allowed!</message>
                                             <failWhenParentIsRelease>false</failWhenParentIsRelease>
                                         </requireSnapshotVersion>
-                                    </rules>
+                                    </rules>-->
                                     <fail>true</fail>
                                 </configuration>
                             </execution>
